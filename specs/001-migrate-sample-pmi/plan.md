@@ -19,10 +19,10 @@ Approach: Select a language with strong security posture, deterministic builds, 
   the iteration process.
 -->
 
-**Language/Version**: NEEDS CLARIFICATION (candidates: Rust 1.75+, Go 1.22+, Python 3.11 hardened)
+**Language/Version**: NEEDS CLARIFICATION (candidates: Java 21 LTS, Rust 1.75+, Go 1.22+, Python 3.11 hardened)
 **Primary Dependencies**: NEEDS CLARIFICATION (prefer standard libraries; minimal deps)
 **Storage**: N/A (files only)
-**Testing**: NEEDS CLARIFICATION (cargo test / go test / pytest)
+**Testing**: NEEDS CLARIFICATION (JUnit 5 / cargo test / go test / pytest)
 **Target Platform**: Linux/Windows server; offline batch CLI
 **Project Type**: single project (CLI + services + models)
 **Performance Goals**: P95 latency per 10k records ≤ legacy baseline; deterministic runs

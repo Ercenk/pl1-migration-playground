@@ -14,6 +14,15 @@ Context: Confidential financial data; zero functionality loss; batch CLI; determ
 
 ## Candidates Evaluated
 
+### Java (21 LTS)
+- Decision: STRONG CANDIDATE (enterprise-aligned)
+- Rationale: Industry-standard, long-term support, excellent tooling (Maven/Gradle), mature security libraries, robust file I/O, and cross-platform JVM.
+- Security: Strong ecosystem (JEPs improving security), dependency management with reproducible builds via Gradle/Maven lockfiles; SBOM via CycloneDX plugins.
+- Observability: SLF4J + Logback/Log4j2 with JSON layouts, Micrometer metrics, OpenTelemetry SDK; rich audit logging patterns.
+- Testing: JUnit 5 for unit/integration; contract tests via golden-file comparisons.
+- Packaging: Fat JARs or native images (GraalVM) for operational simplicity when needed.
+- Alternatives considered: Rust, Go, hardened Python.
+
 ### Rust (1.75+)
 - Decision: STRONG CANDIDATE
 - Rationale: Memory safety (no GC), strong type system, zero-cost abstractions, excellent CLI tooling (clap), structured logging (tracing), deterministic builds via `cargo` with `Cargo.lock`, robust testing (`cargo test`), good Windows/Linux support.
@@ -44,12 +53,13 @@ Context: Confidential financial data; zero functionality loss; batch CLI; determ
 
 ## Preliminary Recommendation
 
+- Choose Java 21 if enterprise standards and tooling alignment are primary, with rich observability and audit logging needs.
 - Choose Rust if maximum security and fine-grained control are top priorities and team is comfortable with Rust.
 - Choose Go for simpler development, static binaries, and fast delivery while maintaining strong safety.
 - Choose hardened Python only if development speed is critical and performance demands are moderate.
 
 ## Next Steps
 
-- Confirm team expertise and deployment constraints (Windows vs Linux predominance, distribution model).
-- Bench simple parsers in Rust and Go with representative data to compare P95 latency.
-- Decide test framework accordingly (cargo test vs go test) and finalize plan.
+- Confirm team expertise and deployment constraints (Windows vs Linux predominance, JVM availability, distribution model).
+- Bench simple parsers in Java vs Rust vs Go with representative data to compare P95 latency.
+- Decide test framework accordingly (JUnit 5 vs cargo test vs go test) and finalize plan.
