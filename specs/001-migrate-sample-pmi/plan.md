@@ -9,7 +9,7 @@
 
 Goal: Re-implement PSAM1 batch reporting as a modern, secure, instrumented CLI preserving exact functionality and outputs.
 
-Approach: Select a language with strong security posture, deterministic builds, and excellent CLI + file I/O support. Implement contract tests to ensure parity, add structured audit logging and metrics, externalize configuration, and enforce least-privilege access.
+Approach: Java 21 LTS with stdlib-only runtime (no third-party libs). Implement contract tests to ensure parity, add structured audit logging via `java.util.logging` and simple in-process metrics, externalize configuration, and enforce least-privilege access.
 
 ## Technical Context
 
@@ -19,14 +19,14 @@ Approach: Select a language with strong security posture, deterministic builds, 
   the iteration process.
 -->
 
-**Language/Version**: NEEDS CLARIFICATION (candidates: Java 21 LTS, Rust 1.75+, Go 1.22+, Python 3.11 hardened)
-**Primary Dependencies**: NEEDS CLARIFICATION (prefer standard libraries; minimal deps)
+**Language/Version**: Java 21 LTS
+**Primary Dependencies**: Java stdlib only (CLI args, `java.nio.file`, `java.time`, `java.util.logging`); optional: JFR for profiling
 **Storage**: N/A (files only)
-**Testing**: NEEDS CLARIFICATION (JUnit 5 / cargo test / go test / pytest)
+**Testing**: JUnit 5 (golden-file contract tests, integration tests)
 **Target Platform**: Linux/Windows server; offline batch CLI
 **Project Type**: single project (CLI + services + models)
 **Performance Goals**: P95 latency per 10k records ≤ legacy baseline; deterministic runs
-**Constraints**: No sensitive data in logs; allowlist paths; reproducible builds
+**Constraints**: No sensitive data in logs; allowlist paths; reproducible builds; enterprise JVM policies; no third-party runtime deps
 **Scale/Scope**: Batch processing of customer records; large inputs supported
 
 ## Constitution Check
@@ -36,7 +36,7 @@ GATE: Must pass before Phase 0 research; will re-check after Phase 1 design.
 - No Functionality Loss: Explicit parity via contract tests (spec FR-001..FR-010).
 - Security & Compliance: Least privilege, encrypted I/O where applicable, audit logs, masking.
 - Test-First & Contracts: Define baseline outputs and comparison suite before implementation.
-- Observability: Structured logs, metrics; health status.
+- Observability: Structured logs via stdlib (`java.util.logging`), simple counters/metrics via in-process tracking; health status.
 - Simplicity & Modern Architecture: Single-project CLI with modular services.
 - Versioning & Change Management: Semantic versioning; deprecation requires plan.
 
