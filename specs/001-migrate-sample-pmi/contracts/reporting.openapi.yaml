@@ -1,0 +1,51 @@
+openapi: 3.0.3
+info:
+  title: PSAM1 Reporting CLI Contract
+  version: 1.0.0
+servers:
+  - url: local
+paths:
+  /run:
+    post:
+      summary: Execute reporting job
+      description: Reads transaction file and customer data to produce reports.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transactionPath:
+                  type: string
+                customerPath:
+                  type: string
+                allowlistPaths:
+                  type: array
+                  items:
+                    type: string
+              required: [transactionPath, customerPath]
+      responses:
+        '200':
+          description: Reports generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  details:
+                    type: array
+                    items:
+                      type: string
+                  totals:
+                    type: array
+                    items:
+                      type: string
+                  metrics:
+                    type: object
+        '400':
+          description: Invalid input
+        '403':
+          description: Access denied by allowlist policy
+        '500':
+          description: Processing error
